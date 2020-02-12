@@ -4,8 +4,6 @@ import axios from 'axios'
 export default class CreateUser extends Component{
     constructor(props){
         super(props)
-
-
         this.onChangeUsername = this.onChangeUsername.bind(this)
         this.onChangeBio = this.onChangeBio.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -72,9 +70,10 @@ export default class CreateUser extends Component{
                         <input type="file"  name="pic" accept="image/*"/>
                     </div>
                     <div className="form-group">
-                        <input className="btn btn-primary" type="submit"/>
+                        <input className="btn btn-primary btn-lg" type="submit"/>
                     </div>
                 </form>
+            
             </div>
         )
     }

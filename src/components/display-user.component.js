@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-
 function User(props){
     return(
         <tr>
@@ -17,10 +16,27 @@ function User(props){
 
 export default class DisplayUser extends Component{
     constructor(props){
+        
         super(props)
         this.state=({
          users:[]   
         })
+        this.clearUsers = this.clearUsers.bind(this)
+        this.deleteUser = this.deleteUser.bind(this)
+    }
+
+    clearUsers(){
+        console.log('Ented on clicking')
+        var temp = JSON.parse(localStorage.getItem('CompletedUsers'))
+        temp = []
+        localStorage.setItem('CompletedUsers', JSON.stringify(temp))
+        for(var i=0; i<this.state.users.length; i++)
+        {
+            this.deleteUser(this.state.users[i]._id)
+        }
+        console.log(JSON.parse(localStorage.getItem('CompletedUsers')))
+
+
     }
 
     componentDidMount(){
@@ -32,6 +48,17 @@ export default class DisplayUser extends Component{
                         return (a.votes > b.votes) ? -1 :  1;
                     })
                    })
+                //    for(var i=0; i<response.data.length; i++)
+                //    {
+                //        chosen_users[response.data[i].username] = {}
+                //        for(var j=0; j<response.data.length-1; j++)
+                //        {
+                //            if(i!=j)
+                //                 chosen_users[response.data[i].username][response.data[j].username] = false
+                //        }
+                //    }
+                  
+                
                }
            })
            .catch(err=>console.log('Errorrrrrrr',err))
@@ -44,6 +71,7 @@ export default class DisplayUser extends Component{
     }
 
     deleteUser(id){
+        console.log('deleted user')
         axios.delete("http://localhost:5000/users/"+id)
           .then(res=>{
               console.log(res)
@@ -72,10 +100,12 @@ export default class DisplayUser extends Component{
                         {this.userList()}
                     </tbody>
                 </table>
+                <button onClick={this.clearUsers} type="button" className="btn btn-primary">Clear All Users</button>
             </div>
         )
     }
 
-    
-
 }
+// chosen_users = {"Hi":"Hi"}
+// console.log(chosen_users)
+// export {chosen_users}
